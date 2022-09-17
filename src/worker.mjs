@@ -28,8 +28,8 @@ const strCheck = (text) =>
     : undefined
 
 /**
-  * Let the work begin
-  */
+ * Let the work begin
+ */
 export default {
   async fetch(req, env, ctx) {
  
@@ -50,6 +50,7 @@ export default {
     const {
         searchParams: params,
         pathname,
+        origin,
       } = new URL(url)
 
     // If Accept includes text/html, assume request wants homepage
@@ -58,7 +59,7 @@ export default {
         status: pathname === "/" ? 200 : 404,
         headers: {
           'Content-Type': 'text/html;charset=utf-8',
-          Link: `https://svg.siq.li${pathname}; rel="canonical"`,
+          Link: `${origin}${pathname}; rel="canonical"`,
           Vary: 'Accept', // If it doesn't include text/html, SVG is generated
         }
       })
@@ -105,7 +106,7 @@ export default {
 
       // Response for generated SVG
       response = new Response(simpleSvgPlaceholder(settings), {
-        status: 201,
+        status: 201,  // 201 Created. Could use 200 OK
         headers: {
           Vary: 'Accept',
           'Content-Type': 'image/svg+xml',
