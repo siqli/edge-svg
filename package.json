@@ -1,0 +1,19 @@
+{
+  "name": "edge-svg",
+  "version": "1.0.0",
+  "description": "Generate SVG placeholder images with a Cloudflare Worker.",
+  "scripts": {
+    "build:html": "node minify-html.js",
+    "prestart": "node minify-html.js",
+    "start": "wrangler dev --local",
+    "dev": "wrangler dev",
+    "publish": "wrangler publish"
+  },
+  "keywords": [],
+  "author": "Siqli",
+  "license": "Jam",
+  "devDependencies": {
+    "@cloudfour/simple-svg-placeholder": "^1.0.2",
+    "html-minifier": "^4.0.0"
+  }
+}
