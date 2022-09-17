@@ -104,11 +104,21 @@ export default {
         settings.dataUri = params.get('data_uri') === "true" ? true : false
         settings.charset = params.get('charset') || undefined
 
+      // Set up canonical header for SVG
+      const svgCanonical = new URL(origin)
+      svgCanonical.search = new URLSearchParams(
+        Object.entries(settings)
+          // Filter those parameters that are undefined
+          .filter(s => s[1] !== undefined)
+          // This will include `data_uri` regardless of value though.
+        ).toString()
+
       // Response for generated SVG
       response = new Response(simpleSvgPlaceholder(settings), {
         status: 201,  // 201 Created. Could use 200 OK
         headers: {
           Vary: 'Accept',
+          Link: `${svgCanonical}; rel="canonical"`,
           'Content-Type': 'image/svg+xml',
           'Access-Control-Allow-Headers': '*',
           'Access-Control-Allow-Methods': 'GET',
