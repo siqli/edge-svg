@@ -61,6 +61,13 @@ export default {
           'Content-Type': 'text/html;charset=utf-8',
           Link: `${origin}${pathname}; rel="canonical"`,
           Vary: 'Accept', // If it doesn't include text/html, SVG is generated
+          'Referrer-Policy': 'no-referrer',
+          'X-XSS-Protection': '1; mode=block',
+          'X-Content-Type-Options': 'nosniff',
+          'X-Frame-Options': 'DENY',
+          'Feature-Policy': 'none',
+          'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+          'X-Robots-Tag': 'index, follow, noarchive, nosnippet, notranslate',
         }
       })
     
