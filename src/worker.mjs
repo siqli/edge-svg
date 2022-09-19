@@ -1,9 +1,12 @@
 /**
  * SVG Generator Cloudflare Worker
+ * 
+ * SPDX-License-Identifier: Jam
  */
- import simpleSvgPlaceholder from '@cloudfour/simple-svg-placeholder'
- import homepage from "./index.html"
- 
+import simpleSvgPlaceholder from '@cloudfour/simple-svg-placeholder'
+import homepage from "./index.html"
+import { version } from "../package.json"
+
 /**
  * Validate Hex
  * RGB, RGBA, RRGGBB, RRGGBBAA
@@ -59,15 +62,17 @@ export default {
         status: pathname === "/" ? 200 : 404,
         headers: {
           'Content-Type': 'text/html;charset=utf-8',
-          Link: `${origin}${pathname}; rel="canonical"`,
+          Link: `<${origin}${pathname}>; rel="canonical"`,
           Vary: 'Accept', // If it doesn't include text/html, SVG is generated
           'Referrer-Policy': 'no-referrer',
           'X-XSS-Protection': '1; mode=block',
           'X-Content-Type-Options': 'nosniff',
           'X-Frame-Options': 'DENY',
           'Feature-Policy': 'none',
+          'Siqli-Edge-SVG': `v${version}`,
           'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
           'X-Robots-Tag': 'index, follow, noarchive, nosnippet, notranslate',
+          'Content-Security-Policy': "base-uri 'self'; script-src 'nonce-9ad3e9f02cb3'; style-src 'nonce-9ad3e9f02cb3'; img-src 'self' data:; object-src 'none'; frame-ancestors 'none';",
         }
       })
     
@@ -111,25 +116,17 @@ export default {
         settings.dataUri = params.get('data_uri') === "true" ? true : false
         settings.charset = params.get('charset') || undefined
 
-      // Set up canonical header for SVG
-      const svgCanonical = new URL(origin)
-      svgCanonical.search = new URLSearchParams(
-        Object.entries(settings)
-          // Filter those parameters that are undefined
-          .filter(s => s[1] !== undefined)
-          // This will include `data_uri` regardless of value though.
-        ).toString()
-
       // Response for generated SVG
       response = new Response(simpleSvgPlaceholder(settings), {
         status: 201,  // 201 Created. Could use 200 OK
         headers: {
           Vary: 'Accept',
-          Link: `${svgCanonical}; rel="canonical"`,
+          Link: `<${cacheUrl.href}>; rel="canonical"`,
           'Content-Type': 'image/svg+xml',
           'Access-Control-Allow-Headers': '*',
           'Access-Control-Allow-Methods': 'GET',
           'Access-Control-Allow-Origin': '*',
+          'Siqli-Edge-SVG': `v${version}`,
           'Cache-Control': 's-maxage=3600',       // Set long
         }
       })
