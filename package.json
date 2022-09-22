@@ -1,6 +1,6 @@
 {
   "name": "edge-svg",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Generate SVG placeholder images with a Cloudflare Worker.",
   "scripts": {
     "build:html": "node minify-html.js",
@@ -13,7 +13,7 @@
   "author": "Siqli",
   "license": "Jam",
   "devDependencies": {
-    "@cloudfour/simple-svg-placeholder": "^1.0.2",
+    "@cloudfour/simple-svg-placeholder": "^1.1.0",
     "html-minifier": "^4.0.0"
   }
 }

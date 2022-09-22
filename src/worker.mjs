@@ -3,7 +3,7 @@
  * 
  * SPDX-License-Identifier: Jam
  */
-import simpleSvgPlaceholder from '@cloudfour/simple-svg-placeholder'
+import svg from '@cloudfour/simple-svg-placeholder'
 import homepage from "./index.html"
 import { version } from "../package.json"
 
@@ -122,7 +122,7 @@ export default {
         settings.charset = params.get('charset') || undefined
 
       // Response for generated SVG
-      response = new Response(simpleSvgPlaceholder(settings), {
+      response = new Response(svg(settings), {
         status: 201,  // 201 Created. Could use 200 OK
         headers: {
           Vary: 'Accept',
