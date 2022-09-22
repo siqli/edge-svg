@@ -8,104 +8,7 @@
     <meta name="referrer" content="no-referrer">
     <meta name="description" content="Placeholder SVG images generated on the edge with a Cloudflare worker.">
     <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIAAQMAAADOtka5AAAAA1BMVEXj4+NAjkDOAAAANklEQVR4Xu3BAQEAAACCIP+vbkhAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8G4IAAAGaOGrHAAAAAElFTkSuQmCC">
-    <style nonce="9ad3e9f02cb3">
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-        font-size: 100%;
-      }
-      h1 {
-        font-weight: normal;
-        font-size: 48px;
-        line-height: 150%;
-        color: #313131;
-      }
-      p,
-      ul,
-      li,
-      code {
-        font-size: 24px;
-        line-height: 150%;
-        color: #4A4A4A;
-      }
-      main {
-        display: flex;
-        width: 90vw;
-        max-width: 1200px;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        margin: 0 auto;
-        gap: 1.25rem;
-      }
-      p.small {
-        font-size: 0.8rem;
-      }
-      header {
-        margin: 4rem auto 0;
-        width: 90vw;
-        max-width: 1200px;
-      }
-      footer {
-        margin: 4rem auto;
-        width: 90vw;
-        max-width: 1200px;
-        text-align: center;
-      }
-      img {
-        width: 100%;
-        max-width: calc(20% - 1rem);
-        cursor: pointer;
-        border-radius: 1rem;
-      }
-      @media screen and (max-width: 800px) {
-        img {
-          max-width: calc(25% - 1rem);
-        }
-      }
-      @media screen and (max-width: 600px) {
-        img {
-          max-width: calc(33% - 1rem);
-        }
-      }
-      .copied {
-        width: 200px;
-        height: 100px;
-        background-color: rgb(12, 12, 12, 0.5);
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        color: #FFFFFF;
-        font-size: 1.5rem;
-        font-weight: bold;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transform: translate(-50%, -50%);
-        z-index: 1000;
-        border-radius: 1rem;
-      }
-      .a11y-nav {
-        position: fixed;
-        z-index: 100;
-        padding: 1rem;
-        width: 100px;
-      }
-      .a11y-nav.top {
-        top: -3rem;
-      }
-      .a11y-nav.bot {
-        bottom: -10rem;
-      }
-      .a11y-nav a {
-        position: absolute;
-      }
-      .a11y-nav.top a:focus {
-        top: 4rem;
-      }
-      .a11y-nav.bot a:focus {
-        bottom: 12rem;
-      }
-    </style>
+    <link rel="stylesheet" href="/styles.css">
   </head>
   <body id="top">
     
@@ -121,9 +24,7 @@
     
       <section id="content">
     
-        <p>Using <a href="https://github.com/cloudfour/simple-svg-placeholder" title="@cloudfour/simple-svg-placeholder"><code>@cloudfour/simple-svg-placeholder</code></a> and a Cloudflare Worker to generate SVG images on the edge.</p>
-
-        <p>If the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept" title="Accept Header on MDN">Accept</a> header includes <code>text/html</code> this page is served, otherwise an SVG is generated.</p>
+        <p>Using <a href="https://github.com/cloudfour/simple-svg-placeholder" title="@cloudfour/simple-svg-placeholder"><code>@cloudfour/simple-svg-placeholder</code></a> and a Netlify Edge Function to generate SVG images on the edge.</p>
 
         <h2>Available Options</h2>
 
@@ -145,10 +46,10 @@
 
         <h2>Examples</h2>
 
-        <p><code>/?width=512&height=512</code><br>
-           <code>/?width=512&height=512&bg_color=000</code><br>
-           <code>/?width=512&height=512&bg_color=000&text=*</code><br>
-           <code>/?width=512&height=512&bg_color=000&text_color=FFF</code></p>
+        <p><code>/svg?width=512&height=512</code><br>
+           <code>/svg?width=512&height=512&bg_color=000</code><br>
+           <code>/svg?width=512&height=512&bg_color=000&text=*</code><br>
+           <code>/svg?width=512&height=512&bg_color=000&text_color=FFF</code></p>
 
         <p class="small">Click <em>(or press Enter on an)</em> image to copy URL to clipboard.</p>
 
@@ -171,91 +72,7 @@
       <a href="#top">Back to top</a>
     </div>
 
-    <script nonce="9ad3e9f02cb3">
-      /**
-       * Generate 20 random SVG images as a test.
-       * Was 100.
-       * Originally tried 1000, but that resulted in 429 errors.
-       */
-
-      // Copy to clipboard
-      const copyToClipbord = (e) => {
-
-        // Get image source
-        const { src } = e.target
-
-        // Try writing to clipboard
-        try {
-          // Write to clipboard
-          navigator.clipboard.writeText(src)
-
-          // Create copied dive
-          const copied = document.createElement('div')
-
-          // Set classname
-          copied.className = "copied"
-
-          // Add text
-          copied.innerText = "Copied!"
-
-          // Append to body
-          document.body.appendChild(copied)
-
-          // Make it disappear automagically
-          setTimeout(() => document.body.removeChild(copied), 500)
-        }
-        // Clipboard events unavailable
-        catch(err) {
-          console.log(err)
-        }
-      }
-      
-      // Where to output everything
-      const main = document.querySelector('main')
-
-      // Characters for colour codes
-      const chars = [ "A", "B", "C", "D", "E", "F", 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
-
-      // RRGGBBAA codes look nicer
-      const codes = Array.from(
-        { length: 20 },
-        () => Array.from(
-          { length: 8 },
-          () => chars[Math.floor(Math.random() * chars.length)]
-        ).join('')
-      )
-
-      // Loop each code
-      codes.forEach(code => {
-
-        // Create image element
-        let img = document.createElement('img')
-
-        // Set source
-        img.src = `/?width=384&height=384&bg_color=${code}&text=*`
-
-        // Set loading to lazy (does this really work?)
-        img.loading = "lazy"
-
-        // Alt text
-        img.alt = `Color: ${code}`
-
-        // Make keyboard focusable
-        img.tabIndex = 0
-
-        // Add click event
-        img.addEventListener('click', copyToClipbord)
-
-        // Add keydown event
-        img.addEventListener('keydown', (e) => {
-          if (e.code === "Enter")
-            copyToClipbord(e)
-        })
-
-        // Append image to output area
-        main.appendChild(img)
-      })
-    </script>
+    <script src="/app.js"></script>
 
   </body>
 </html>

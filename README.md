@@ -1,12 +1,12 @@
 # Generate SVG Images at the Edge!
 
-Cloudflare Workers script to generate SVG images on the edge using [@cloudfour/simple-svg-placeholder](https://github.com/cloudfour/simple-svg-placeholder).
+Netlify Edge Function to generate SVG images on the edge using [@cloudfour/simple-svg-placeholder](https://github.com/cloudfour/simple-svg-placeholder).
 
-Utilises the [Cloudflare Cache API](https://developers.cloudflare.com/workers/runtime-apis/cache/) for generated images.
+Unlike the original version using Cloudflare Workers, the function here runs on a different path `/svg`.
 
-Domain root will serve either the homepage or default SVG based on the [`Accept`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) header.
+This version is a demonstration of how one might implement and use their own generator, rather than using an external service *(like [https://svg.siq.li](https://svg.siq.li).)*
 
-Deploy to your own worker, or use [https://svg.siq.li](https://svg.siq.li).
+Demonstration available at [https://siqli-svg.netlify.app](https://siqli-svg.netlify.app).
 
 ## Available Options
 
@@ -23,10 +23,10 @@ Deploy to your own worker, or use [https://svg.siq.li](https://svg.siq.li).
 - `charset`
 
 ## Examples
-- `/?width=512&height=512`
-- `/?width=512&height=512&bg_color=000`
-- `/?width=512&height=512&bg_color=000&text=*`
-- `/?width=512&height=512&bg_color=000&text_color=FFF`
+- `/svg?width=512&height=512`
+- `/svg?width=512&height=512&bg_color=000`
+- `/svg?width=512&height=512&bg_color=000&text=*`
+- `/svg?width=512&height=512&bg_color=000&text_color=FFF`
 
 ## License
 

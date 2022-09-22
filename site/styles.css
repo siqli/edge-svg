@@ -1,0 +1,96 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-size: 100%;
+}
+h1 {
+  font-weight: normal;
+  font-size: 48px;
+  line-height: 150%;
+  color: #313131;
+}
+p,
+ul,
+li,
+code {
+  font-size: 24px;
+  line-height: 150%;
+  color: #4A4A4A;
+}
+main {
+  display: flex;
+  width: 90vw;
+  max-width: 1200px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 auto;
+  gap: 1.25rem;
+}
+p.small {
+  font-size: 0.8rem;
+}
+header {
+  margin: 4rem auto 0;
+  width: 90vw;
+  max-width: 1200px;
+}
+footer {
+  margin: 4rem auto;
+  width: 90vw;
+  max-width: 1200px;
+  text-align: center;
+}
+img {
+  width: 100%;
+  max-width: calc(20% - 1rem);
+  cursor: pointer;
+  border-radius: 1rem;
+}
+@media screen and (max-width: 800px) {
+  img {
+    max-width: calc(25% - 1rem);
+  }
+}
+@media screen and (max-width: 600px) {
+  img {
+    max-width: calc(33% - 1rem);
+  }
+}
+.copied {
+  width: 200px;
+  height: 100px;
+  background-color: rgb(12, 12, 12, 0.5);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  border-radius: 1rem;
+}
+.a11y-nav {
+  position: fixed;
+  z-index: 100;
+  padding: 1rem;
+  width: 100px;
+}
+.a11y-nav.top {
+  top: -3rem;
+}
+.a11y-nav.bot {
+  bottom: -10rem;
+}
+.a11y-nav a {
+  position: absolute;
+}
+.a11y-nav.top a:focus {
+  top: 4rem;
+}
+.a11y-nav.bot a:focus {
+  bottom: 12rem;
+}
