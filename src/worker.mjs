@@ -75,6 +75,11 @@ export default {
           'Content-Security-Policy': "base-uri 'self'; script-src 'nonce-9ad3e9f02cb3'; style-src 'nonce-9ad3e9f02cb3'; img-src 'self' data:; object-src 'none'; frame-ancestors 'none';",
         }
       })
+
+    // Capture other non-image/svg+xml accept
+    // Handles things like `robots.txt`
+    if (!headers.get('accept') || !headers.get('accept')?.includes('image'))
+      return new Response(null, { status: 204 })
     
       // ////////
       // Question now is, should the homepage get cached too?
